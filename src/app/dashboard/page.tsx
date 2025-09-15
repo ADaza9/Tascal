@@ -1,3 +1,4 @@
+'use server';
 import { requireAuth } from "@/lib/auth-utils";
 import { logoutAction } from "@/lib/auth-actions";
 import { RoleGuard, SuperAdminOnly, SupervisorAndAbove } from "@/components/auth/role-guard";
@@ -7,7 +8,7 @@ export default async function DashboardPage() {
   const session = await requireAuth({
     headers: await headers()
   });
-  const user = session.user as any;
+  const user = session?.user as any;
 
   return (
     <div className="min-h-screen bg-base-200">

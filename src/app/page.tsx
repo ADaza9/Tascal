@@ -1,10 +1,11 @@
 import { getCurrentUser } from "@/lib/auth-utils";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { headers } from "next/headers";
 
 export default async function Home() {
   // Check if user is already logged in
-  const user = await getCurrentUser();
+  const user = await getCurrentUser( await headers());
   if (user) {
     redirect("/dashboard");
   }
@@ -41,9 +42,6 @@ export default async function Home() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link href="/auth/signin" className="btn btn-primary btn-lg">
                   Iniciar Sesión
-                </Link>
-                <Link href="/auth/signup" className="btn btn-outline btn-lg">
-                  Crear Cuenta
                 </Link>
               </div>
             </div>

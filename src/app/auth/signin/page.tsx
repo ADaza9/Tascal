@@ -26,16 +26,6 @@ export default async function SignInPage() {
 
           {/* Login Form */}
           <LoginForm />
-
-          {/* Footer */}
-          <div className="text-center mt-8 text-base-content/60">
-            <p className="text-sm">
-              ¿No tienes una cuenta?{" "}
-              <a href="/auth/signup" className="link link-primary">
-                Regístrate aquí
-              </a>
-            </p>
-          </div>
         </div>
       </div>
     </div>

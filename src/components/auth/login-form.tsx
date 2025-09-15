@@ -1,6 +1,6 @@
 "use client";
 
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import { loginAction, ActionState } from "@/lib/auth-actions";
 import { useState } from "react";
@@ -27,7 +27,7 @@ function SubmitButton() {
 }
 
 export function LoginForm() {
-  const [state, formAction] = useFormState<ActionState, FormData>(loginAction, {});
+  const [state, formAction] = useActionState(loginAction, {});
   const [showPassword, setShowPassword] = useState(false);
 
   return (

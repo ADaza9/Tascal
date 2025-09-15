@@ -51,6 +51,11 @@ export async function loginAction(
 
     return { error: "Error inesperado durante el login" };
   } catch (error: any) {
+    // Don't log NEXT_REDIRECT errors as they are expected
+    if (error.message === "NEXT_REDIRECT") {
+      throw error;
+    }
+
     console.error("Login error:", error);
 
     // Handle validation errors
