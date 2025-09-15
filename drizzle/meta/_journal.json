@@ -5,8 +5,22 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1757885671133,
-      "tag": "0000_perpetual_sally_floyd",
+      "when": 1757886867790,
+      "tag": "0000_smart_mantis",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1757887171012,
+      "tag": "0001_clever_genesis",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757887298579,
+      "tag": "0002_nostalgic_the_order",
       "breakpoints": true
     }
   ]

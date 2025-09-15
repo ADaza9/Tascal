@@ -1,6 +1,6 @@
 {
-  "id": "6efddd84-8ff6-43fd-a5fb-01bf7657c41d",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "4af0a90a-9b3d-4878-bc00-0b203c09ccca",
+  "prevId": "6efddd84-8ff6-43fd-a5fb-01bf7657c41d",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -95,7 +95,7 @@
         "accounts_user_id_users_id_fk": {
           "name": "accounts_user_id_users_id_fk",
           "tableFrom": "accounts",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
@@ -220,7 +220,7 @@
         "sessions_user_id_users_id_fk": {
           "name": "sessions_user_id_users_id_fk",
           "tableFrom": "sessions",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
@@ -245,8 +245,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.users": {
-      "name": "users",
+    "public.user": {
+      "name": "user",
       "schema": "",
       "columns": {
         "id": {
@@ -311,7 +311,7 @@
       "foreignKeys": {
         "users_role_id_roles_id_fk": {
           "name": "users_role_id_roles_id_fk",
-          "tableFrom": "users",
+          "tableFrom": "user",
           "tableTo": "roles",
           "columnsFrom": [
             "role_id"
