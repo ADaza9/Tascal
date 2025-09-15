@@ -1,14 +1,14 @@
-'use server';
-import { requireAuth } from "@/lib/auth-utils";
 import { logoutAction } from "@/lib/auth-actions";
 import { RoleGuard, SuperAdminOnly, SupervisorAndAbove } from "@/components/auth/role-guard";
-import { headers } from "next/headers";
+import { getCurrentUser } from "@/lib/session";
+import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
-  const session = await requireAuth({
-    headers: await headers()
-  });
-  const user = session?.user as any;
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect("/auth/signin");
+  }
 
   return (
     <div className="min-h-screen bg-base-200">
@@ -20,15 +20,15 @@ export default async function DashboardPage() {
         <div className="flex-none gap-2">
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full bg-primary text-primary-content flex items-center justify-center">
-                {user.name?.charAt(0)?.toUpperCase() || "U"}
+              <div className="w-10 rounded-full bg-primary text-primary-content flex content-center justify-center">
+                {user?.name?.charAt(0)?.toUpperCase() || "U"}
               </div>
             </div>
             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
               <li>
                 <a className="justify-between">
                   Perfil
-                  <span className="badge badge-secondary">{user.role}</span>
+                  <span className="badge badge-secondary">{user?.role}</span>
                 </a>
               </li>
               <li>
@@ -52,9 +52,11 @@ export default async function DashboardPage() {
               <p className="py-4">
                 Tu rol: <span className="badge badge-primary badge-lg">{user.role}</span>
               </p>
-              <p className="text-base-content/70">
-                {user.roleDescription}
-              </p>
+              {user.roleDescription && (
+                <p className="text-base-content/70">
+                  {user.roleDescription}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -65,7 +67,8 @@ export default async function DashboardPage() {
             <div className="stat-title">Nivel de Acceso</div>
             <div className="stat-value text-primary">{
               user.role === 'superAdmin' ? '3' :
-              user.role === 'supervisor' ? '2' : '1'
+              user.role === 'supervisor' ? '2' :
+              user.role === 'technician' ? '1' : '0'
             }</div>
             <div className="stat-desc">de 3 niveles</div>
           </div>
@@ -98,7 +101,7 @@ export default async function DashboardPage() {
           </div>
 
           {/* Supervisor and above */}
-          <SupervisorAndAbove userRole={user.role}>
+          <SupervisorAndAbove userRole={user.role as any}>
             <div className="card bg-base-100 shadow-xl">
               <div className="card-body">
                 <h2 className="card-title text-warning">👥 Gestión de Equipos</h2>
@@ -111,7 +114,7 @@ export default async function DashboardPage() {
           </SupervisorAndAbove>
 
           {/* Super Admin only */}
-          <SuperAdminOnly userRole={user.role}>
+          <SuperAdminOnly userRole={user.role as any}>
             <div className="card bg-base-100 shadow-xl">
               <div className="card-body">
                 <h2 className="card-title text-error">⚙️ Administración</h2>
@@ -124,7 +127,7 @@ export default async function DashboardPage() {
           </SuperAdminOnly>
 
           {/* Technician specific */}
-          <RoleGuard requiredRole="technician" userRole={user.role} exact>
+          <RoleGuard requiredRole="technician" userRole={user.role  as any} exact>
             <div className="card bg-base-100 shadow-xl">
               <div className="card-body">
                 <h2 className="card-title text-info">🔧 Herramientas Técnicas</h2>

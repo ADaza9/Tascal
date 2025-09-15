@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/utils/auth";
+import { cookies, headers } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
 import { z } from "zod";
 
@@ -8,16 +9,6 @@ import { z } from "zod";
 const loginSchema = z.object({
   email: z.string().email("Debe ser un email válido"),
   password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
-});
-
-const signupSchema = z.object({
-  name: z.string().min(2, "El nombre debe tener al menos 2 caracteres"),
-  email: z.string().email("Debe ser un email válido"),
-  password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Las contraseñas no coinciden",
-  path: ["confirmPassword"],
 });
 
 export interface ActionState {
@@ -42,9 +33,20 @@ export async function loginAction(
     // Attempt login
     const result = await auth.api.signInEmail({
       body: validatedData,
+      headers: await headers(), // ✅ Esto establece las cookies
     });
+    console.log("Login result:", result);
 
     if (result?.user) {
+      const cookieStore = await cookies();
+      cookieStore.set("better-auth.session_token", result.token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 30, // 30 días
+        path: "/",
+      });
+
       // Redirect to dashboard on successful login
       redirect("/dashboard", RedirectType.replace);
     }
@@ -82,62 +84,10 @@ export async function loginAction(
   }
 }
 
-export async function signupAction(
-  prevState: ActionState,
-  formData: FormData
-): Promise<ActionState> {
-  try {
-    const rawData = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      password: formData.get("password") as string,
-      confirmPassword: formData.get("confirmPassword") as string,
-    };
-
-    // Validate input
-    const validatedData = signupSchema.parse(rawData);
-
-    // Attempt signup
-    const result = await auth.api.signUpEmail({
-      body: {
-        name: validatedData.name,
-        email: validatedData.email,
-        password: validatedData.password,
-      },
-    });
-
-    if (result?.user) {
-      return { success: "Cuenta creada exitosamente. Puedes iniciar sesión ahora." };
-    }
-
-    return { error: "Error inesperado durante el registro" };
-  } catch (error: any) {
-    console.error("Signup error:", error);
-
-    // Handle validation errors
-    if (error.name === "ZodError") {
-      const fieldErrors: Record<string, string[]> = {};
-      error.errors.forEach((err: any) => {
-        if (err.path) {
-          fieldErrors[err.path[0]] = [err.message];
-        }
-      });
-      return { fieldErrors };
-    }
-
-    // Handle auth errors
-    if (error.message?.includes("already exists")) {
-      return { error: "Ya existe una cuenta con este email" };
-    }
-
-    return { error: "Error durante el registro. Intenta nuevamente" };
-  }
-}
-
 export async function logoutAction() {
   try {
     await auth.api.signOut({
-      headers: new Headers()
+      headers: await headers(),
     });
     redirect("/auth/signin");
   } catch (error) {

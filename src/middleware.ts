@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/utils/auth";
+import { db } from "@/db";
+import { session, user, roles } from "@/db/auth-schema";
+import { eq, and, gt } from "drizzle-orm";
 
 // Define role hierarchy - higher numbers = more permissions
 const ROLE_HIERARCHY = {
@@ -31,33 +33,68 @@ export async function middleware(request: NextRequest) {
   }
 
   try {
-    // Get session from Better Auth
-    const session = await auth.api.getSession({
-      headers: request.headers
-    });
+    // Get session token from cookie
+    const sessionToken = request.cookies.get('better-auth.session_token')?.value;
+    console.log('Cookie token:', sessionToken);
 
-    // If no session, redirect to login
-    if (!session?.user) {
+    if (!sessionToken) {
+      console.log('No session token found');
       const loginUrl = new URL('/auth/signin', request.url);
       loginUrl.searchParams.set('callbackUrl', pathname);
       return NextResponse.redirect(loginUrl);
     }
 
-    // Check if user has required role
-    const userRole = (session.user as any).role as Role;
+    // Verify session directly in database
+    const currentTime = new Date();
+    const sessionData = await db
+      .select({
+        sessionId: session.id,
+        sessionToken: session.token,
+        sessionExpiresAt: session.expiresAt,
+        userId: user.id,
+        userEmail: user.email,
+        userName: user.name,
+        userRoleId: user.roleId,
+        roleName: roles.name,
+      })
+      .from(session)
+      .innerJoin(user, eq(session.userId, user.id))
+      .leftJoin(roles, eq(user.roleId, roles.id))
+      .where(
+        and(
+          eq(session.token, sessionToken),
+          gt(session.expiresAt, currentTime) // Session not expired
+        )
+      )
+      .limit(1);
+
+    console.log('Database session:', sessionData[0]);
+
+    // If no valid session found
+    if (!sessionData.length) {
+      console.log('No valid session in database');
+      const loginUrl = new URL('/auth/signin', request.url);
+      loginUrl.searchParams.set('callbackUrl', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
+
+    const userData = sessionData[0];
+    const userRole = userData.roleName as Role;
     const requiredRoles = PROTECTED_ROUTES[protectedRoute];
 
+    console.log('User role:', userRole, 'Required roles:', requiredRoles);
+
+    // Check if user has required role
     if (!userRole || !requiredRoles.includes(userRole)) {
-      // Redirect to unauthorized page
+      console.log('User does not have required role');
       return NextResponse.redirect(new URL('/unauthorized', request.url));
     }
 
-    // User has access, continue
+    console.log('Access granted for user:', userData.userEmail);
     return NextResponse.next();
 
   } catch (error) {
     console.error('Middleware error:', error);
-    // On error, redirect to login
     const loginUrl = new URL('/auth/signin', request.url);
     loginUrl.searchParams.set('callbackUrl', pathname);
     return NextResponse.redirect(loginUrl);
@@ -65,6 +102,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
+  runtime: "nodejs",
   matcher: [
     '/admin/:path*',
     '/supervisor/:path*',

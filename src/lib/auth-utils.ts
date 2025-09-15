@@ -39,25 +39,6 @@ export function hasSpecificPermission(userRole: UserRole, permission: string): b
 }
 
 /**
- * Server-side function to get session and verify role
- */
-export async function requireAuth({ requiredRole, headers }: { requiredRole?: UserRole, headers?: Headers } = {}) {
-  const session = await auth.api.getSession({
-    headers: headers! // Proper Headers object for server-side calls
-  });
-
-  if (!session?.user) {
-    redirect('/auth/signin');
-  }
-
-  if (requiredRole && !hasPermission((session.user as any).role as UserRole, requiredRole)) {
-    redirect('/unauthorized');
-  }
-
-  return session;
-}
-
-/**
  * Server-side function to get current user with role
  */
 export async function getCurrentUser(headers: Headers) {
