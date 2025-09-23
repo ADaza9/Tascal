@@ -26,7 +26,7 @@ function SubmitButton() {
   );
 }
 
-export function LoginForm() {
+export function LoginForm({isDev}: {isDev: boolean}) {
   const [state, formAction] = useActionState(loginAction, {});
   const [showPassword, setShowPassword] = useState(false);
 
@@ -129,6 +129,7 @@ export function LoginForm() {
         </form>
 
         {/* Demo Credentials */}
+        {isDev &&  (<>
         <div className="divider">Cuentas de prueba</div>
         <div className="bg-base-200 p-4 rounded-lg text-sm space-y-2">
           <div>
@@ -147,6 +148,8 @@ export function LoginForm() {
             technician@example.com / Technical123!
           </div>
         </div>
+        </>
+       ) }
       </div>
     </div>
   );
