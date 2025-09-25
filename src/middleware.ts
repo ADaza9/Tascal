@@ -80,8 +80,6 @@ export async function middleware(request: NextRequest) {
     const userRole = userData.roleName as Role;
     const requiredRoles = PROTECTED_ROUTES[protectedRoute];
 
-    console.log('User role:', userRole, 'Required roles:', requiredRoles);
-
     // Check if user has required role
     if (!userRole || !requiredRoles.includes(userRole)) {
       console.log('User does not have required role');

@@ -10,12 +10,11 @@ export default async function DashboardPage() {
     redirect("/auth/signin");
   }
 
-  const isDevelopment = process.env.DEVELOPMENT === "development";
+  const isDevelopment = process.env.NODE_ENV === "development";
 
   return (
     <div className="min-h-screen bg-base-200">
       <div className="container mx-auto px-4 py-8">
-        {/* Welcome Section */}
         <div className="hero bg-base-100 rounded-lg shadow-lg mb-8">
           <div className="hero-content text-center">
             <div className="max-w-md">
@@ -32,11 +31,8 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        {/* Role-based Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-          {/* Available to all authenticated users */}
-          {/* Supervisor and above */}
           <SupervisorAndAbove userRole={user.role as any}>
             <div className="card bg-base-100 shadow-xl">
               <div className="card-body">
@@ -77,6 +73,20 @@ export default async function DashboardPage() {
             </div>
           </RoleGuard>
 
+  
+          <RoleGuard requiredRole="technician" userRole={user.role  as any} exact>
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title text-info">🔧 Ver listad de Actividades</h2>
+                <p>lista de actividades de control.</p>
+                <div className="card-actions justify-end">
+                   <Link href={'/dashboard/list'}>
+                  <button className="btn btn-info">Ver Listado</button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </RoleGuard>
         </div>
 
         {/* User Info Debug */}

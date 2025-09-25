@@ -13,7 +13,7 @@ interface FormState {
   data: FormDataRegister;
 }
 
-const StepperForm = ({user}: {user: UserWithRole}) => {
+const StepperForm = ({user, isDevelopment}: {user: UserWithRole, isDevelopment: boolean}) => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const router = useRouter();
@@ -590,12 +590,13 @@ const StepperForm = ({user}: {user: UserWithRole}) => {
           </div>
 
           {/* Debug Info */}
-          <div className="mt-8 p-4 bg-base-200 rounded-lg">
+          {isDevelopment && <div className="mt-8 p-4 bg-base-200 rounded-lg">
             <h4 className="font-semibold mb-2">Datos actuales:</h4>
             <pre className="text-xs overflow-auto">
               {JSON.stringify(form.state.values, null, 2)}
             </pre>
-          </div>
+          </div>}
+          
         </div>
       </div>
     </div>
