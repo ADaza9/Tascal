@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { useForm, useStore } from '@tanstack/react-form';
 import { Turn, ActivityType, Zona, Destino, ZonaMantos, SondeoType, FormDataRegister } from '@/app/models/form';
+import { UserWithRole } from '@/lib/session';
+import { useRouter } from 'next/navigation';
 
 
 interface FormState {
@@ -11,8 +13,10 @@ interface FormState {
   data: FormDataRegister;
 }
 
-const StepperForm = () => {
+const StepperForm = ({user}: {user: UserWithRole}) => {
   const [currentStep, setCurrentStep] = useState(1);
+
+  const router = useRouter();
   
   const form = useForm({
     defaultValues: {
@@ -21,9 +25,24 @@ const StepperForm = () => {
       data: {} as FormDataRegister,
     },
     onSubmit: async ({ value }) => {
-      console.log('Datos del formulario:', { form: value });
-      // Aquí enviarías los datos al servidor
-      alert('Formulario enviado! Ver consola para los datos.');
+    
+
+     await fetch('/api/activity', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({...value, userId: user.id}),
+      })
+      .then(response => response.json())
+      .then(data => {
+         if (data.activity) {
+          router.push('/dashboard/list');
+         }
+      })
+      .catch((error) => {
+        console.error('Error al enviar el formulario:', error);
+      });
     },
   });
 

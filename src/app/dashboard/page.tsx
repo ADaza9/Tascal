@@ -1,4 +1,3 @@
-import { logoutAction } from "@/lib/auth-actions";
 import { RoleGuard, SuperAdminOnly, SupervisorAndAbove } from "@/components/auth/role-guard";
 import { getCurrentUser } from "@/lib/session";
 import { redirect } from "next/navigation";

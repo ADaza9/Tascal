@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, pgEnum, uuid, jsonb, date } from "drizzle-orm/pg-core";
 
 export const roles = pgTable("roles", {
   id: text("id").primaryKey(),
@@ -71,3 +71,37 @@ export const verification = pgTable("verification", {
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
 });
+
+
+export const activityLog = pgTable("activity_log", {
+  id: text("id").primaryKey(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  action: text("action").notNull(),
+  details: text("details"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const turnEnum = pgEnum('turn', ['diurno', 'nocturno']);
+
+export const typeEnum = pgEnum('type', [
+  'desvio_de_cargas',
+  'inspeccion_mantos_carbon',
+  'inspeccion_pilas',
+  'sondeo_cargas'
+]);
+
+
+export const activityOperation = pgTable('activityOperation', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  turn: turnEnum('turn').notNull(),
+  type: typeEnum('type').notNull(),
+  data: jsonb('data'),
+  createdDay: timestamp('created_day').defaultNow(),
+  updatedAt: timestamp('updated_at').defaultNow()
+});
+  

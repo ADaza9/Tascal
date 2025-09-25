@@ -68,8 +68,6 @@ export async function middleware(request: NextRequest) {
       )
       .limit(1);
 
-    console.log('Database session:', sessionData[0]);
-
     // If no valid session found
     if (!sessionData.length) {
       console.log('No valid session in database');
