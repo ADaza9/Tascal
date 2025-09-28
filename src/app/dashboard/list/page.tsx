@@ -4,7 +4,6 @@ import { db } from "@/db";
 import { activityOperation } from "@/db/auth-schema";
 import { getCurrentUser } from "@/lib/session";
 import { eq } from "drizzle-orm";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function registerActivity() {
@@ -22,7 +21,7 @@ export default async function registerActivity() {
     <div className="min-h-screen px-4 py-8">
        <HeaderActivity link="/dashboard" title="Historial de Actividades" />
       <section className="mt-6 mx-4">
-        <ActivityOperationTable data={activities} />
+        <ActivityOperationTable data={activities as any} />
       </section>
     </div>
   );

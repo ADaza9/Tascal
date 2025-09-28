@@ -8,42 +8,17 @@ import {
   flexRender,
   createColumnHelper,
 } from '@tanstack/react-table';
+import { IActivityOperation } from '@/app/models/activity.type';
 
-interface ActivityOperationData {
-  tajo?: string;
-  coordenada?: string;
-  destinoInicial?: string;
-  destinoFinal?: string;
-  pronosticoBTU?: number;
-  btuReal?: number;
-  ubicacion?: string;
-  estado?: string;
-  observaciones?: string;
-  numeroPila?: string;
-  altura?: number;
-  profundidad?: number;
-  temperatura?: number;
-  resultados?: string;
-}
 
-interface ActivityOperation {
-  id: string;
-  userId: string;
-  turn: 'diurno' | 'nocturno';
-  type: 'desvio_de_cargas' | 'inspeccion_mantos_carbon' | 'inspeccion_pilas' | 'sondeo_cargas';
-  data: ActivityOperationData;
-  createdDay: string;
-  updatedAt: string;
-}
-
-const columnHelper = createColumnHelper<ActivityOperation>();
+const columnHelper = createColumnHelper<IActivityOperation>();
 
 interface ActivityOperationTableProps {
-  data: ActivityOperation[];
+  data: IActivityOperation[];
 }
 
-const ActivityOperationTable: React.FC<ActivityOperationTableProps> = ({ data: initialData }) => {
-  const [data, setData] = useState<ActivityOperation[]>(initialData);
+const ActivityOperationTable = ({ data: initialData } : { data : IActivityOperation[]}) => {
+  const [data, setData] = useState<IActivityOperation[]>(initialData);
   const [editingBtuReal, setEditingBtuReal] = useState<{ [key: string]: string }>({});
 
   // Mock function para actualizar el registro - reemplazar con API real
@@ -53,7 +28,7 @@ const ActivityOperationTable: React.FC<ActivityOperationTableProps> = ({ data: i
     // await updateActivityOperation(id, { data: { ...existingData, btuReal } });
   };
 
-  const handleBtuRealSubmit = async (row: ActivityOperation) => {
+  const handleBtuRealSubmit = async (row: IActivityOperation) => {
     const inputValue = editingBtuReal[row.id];
     if (!inputValue || inputValue.trim() === '') return;
 
