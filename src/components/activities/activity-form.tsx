@@ -260,7 +260,7 @@ const StepperForm = ({
               >
                 <option value="">Selecciona destino inicial</option>
                 {
-                  pilas.map( pila => <option value="Pilas">{pila}</option>)
+                  pilas.map( (pila, index) => <option key={index + pila} value="Pilas">Pilas {pila}</option>)
                 }
                 
                 <option value="Silos">Silos</option>
@@ -284,7 +284,7 @@ const StepperForm = ({
               >
                 <option value="">Selecciona destino final</option>
                   {
-                  pilas.map( pila => <option value="Pilas">Pila {pila}</option>)
+                  pilas.map( (pila, index) => <option key={pila + index} value="Pilas">Pila {pila}</option>)
                 }
                 <option value="Silos">Silos</option>
                 <option value="Planta de Lavado">Planta de Lavado</option>
@@ -334,7 +334,7 @@ const StepperForm = ({
               <label className="label">
                 <span className="label-text">Tajo</span>
               </label>
-              {zona === "Zona Norte" ? (
+              
                 <select
                   className="select select-bordered w-full"
                   value={field.state.value || ""}
@@ -347,15 +347,7 @@ const StepperForm = ({
                     </option>
                   ))}
                 </select>
-              ) : (
-                <input
-                  type="text"
-                  placeholder="Ingresa el nombre del tajo"
-                  className="input input-bordered w-full"
-                  value={field.state.value || ""}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-              )}
+              
             </div>
           )}
         </form.Field>
