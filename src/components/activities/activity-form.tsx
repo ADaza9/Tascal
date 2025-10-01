@@ -284,7 +284,7 @@ const StepperForm = ({
               >
                 <option value="">Selecciona destino final</option>
                   {
-                  pilas.map( pila => <option value="Pilas">{pila}</option>)
+                  pilas.map( pila => <option value="Pilas">Pila {pila}</option>)
                 }
                 <option value="Silos">Silos</option>
                 <option value="Planta de Lavado">Planta de Lavado</option>
@@ -417,7 +417,7 @@ const StepperForm = ({
               >
                 <option value="">Selecciona Pila</option>
                   {
-                  pilas.map( pila => <option value="Pilas">{pila}</option>)
+                  pilas.map( pila => <option value="Pilas"> Pila {pila}</option>)
                 }
               </select>
             </div>
@@ -516,7 +516,7 @@ const StepperForm = ({
               >
                 <option value="">Selecciona Pila</option>
                   {
-                  pilas.map( pila => <option value="Pilas">{pila}</option>)
+                  pilas.map( pila => <option value="Pilas"> Pila {pila}</option>)
                 }
               </select>
             </div>
