@@ -93,13 +93,13 @@ const DesvioCargas: React.FC<DesvioTableProps> = ({ data: initialData }) => {
     }),
     columnHelper.accessor('data.pronosticoBTU', {
       header: 'Pronóstico BTU',
-      cell: info => info.getValue().toLocaleString(),
+      cell: info => info.getValue()?.toLocaleString(),
     }),
     columnHelper.accessor('data.btuReal', {
       header: 'BTU Real',
       cell: info => {
         const value = info.getValue();
-        return value ? value.toLocaleString() : '-';
+        return value ? value?.toLocaleString() : '-';
       },
     }),
     columnHelper.display({
@@ -222,9 +222,9 @@ const DesvioCargas: React.FC<DesvioTableProps> = ({ data: initialData }) => {
                 </td>
                 <td className="px-3 py-3">
                   <div className="space-y-1 text-sm">
-                    <div><span className="font-medium">Pronóstico:</span> {row.original.data.pronosticoBTU.toLocaleString()}</div>
+                    <div><span className="font-medium">Pronóstico:</span> {row.original.data.pronosticoBTU?.toLocaleString()}</div>
                     {row.original.data.btuReal && (
-                      <div><span className="font-medium">Real:</span> {row.original.data.btuReal.toLocaleString()}</div>
+                      <div><span className="font-medium">Real:</span> {row.original.data.btuReal?.toLocaleString()}</div>
                     )}
                   </div>
                 </td>
@@ -247,7 +247,7 @@ const DesvioCargas: React.FC<DesvioTableProps> = ({ data: initialData }) => {
                       />
                       <button
                         onClick={() => handleBtuRealSubmit(row.original)}
-                        disabled={!editingBtuReal[row.original.id] || editingBtuReal[row.original.id].trim() === ''}
+                        disabled={!editingBtuReal[row.original.id] || editingBtuReal[row.original.id]?.trim() === ''}
                         className="w-full px-3 py-1 text-xs bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300 transition-colors"
                       >
                         Agregar
@@ -294,14 +294,14 @@ const DesvioCargas: React.FC<DesvioTableProps> = ({ data: initialData }) => {
                 <div>
                   <span className="font-medium text-gray-600">Pronóstico BTU:</span>
                   <div className="text-gray-900 font-medium">
-                    {row.original.data.pronosticoBTU.toLocaleString()}
+                    {row.original.data.pronosticoBTU?.toLocaleString()}
                   </div>
                 </div>
                 {row.original.data.btuReal && (
                   <div>
                     <span className="font-medium text-gray-600">BTU Real:</span>
                     <div className="text-gray-900 font-medium">
-                      {row.original.data.btuReal.toLocaleString()}
+                      {row.original.data.btuReal?.toLocaleString()}
                     </div>
                   </div>
                 )}

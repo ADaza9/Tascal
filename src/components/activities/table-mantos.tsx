@@ -129,7 +129,7 @@ const InspeccionMantosTable: React.FC<InspeccionMantosTableProps> = ({ data: ini
     columnHelper.accessor('data.comentarios', {
       header: 'Comentarios',
       cell: info => (
-        <div className="max-w-xs truncate" title={info.getValue() || ''}>
+        <div className="max-w-xs truncate text-gray-800" title={info.getValue() || ''}>
           {info.getValue() || '-'}
         </div>
       ),
@@ -241,15 +241,15 @@ const InspeccionMantosTable: React.FC<InspeccionMantosTableProps> = ({ data: ini
             {table.getRowModel().rows.map(row => (
               <tr key={row.id} className="hover:bg-gray-50">
                 <td className="px-3 py-3">
-                  <div className="space-y-1">
+                  <div className="space-y-1 text-gray-800">
                     <span className="capitalize font-medium text-sm">{row.original.turn}</span>
-                    <div className="text-xs text-gray-600">{formatHora(row.original.updatedAt)}</div>
+                    <div className="text-xs ">{formatHora(row.original.updatedAt)}</div>
                   </div>
                 </td>
                 <td className="px-3 py-3">
-                  <div className="space-y-1 text-sm">
+                  <div className="space-y-1 text-sm text-gray-800">
                     <div>{row.original.data.coordenada}</div>
-                    <div className="text-xs text-gray-600">
+                    <div className="text-xs">
                       {row.original.data.equipoCargue} • {row.original.data.toneladas?.toLocaleString()} ton
                     </div>
                   </div>
