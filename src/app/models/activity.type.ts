@@ -81,7 +81,8 @@ export interface IInspeccionPilas {
 }
 
 interface ISondeosData {
-  coordenadaOPila: string;
+  nombrePila: string;
+  coordenada: string;
   porcentajeCeniza: number;
   cps: string;
 }

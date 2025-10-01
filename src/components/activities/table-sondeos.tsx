@@ -27,8 +27,16 @@ const SondeosTable: React.FC<SondeosTableProps> = ({ data }) => {
         </span>
       ),
     }),
-    columnHelper.accessor('data.coordenadaOPila', {
-      header: 'Coordenada o Pila',
+    columnHelper.accessor('data.nombrePila', {
+      header: 'Pila',
+      cell: info => (
+        <span className="font-medium text-blue-600">
+          {info.getValue()}
+        </span>
+      ),
+    }),
+     columnHelper.accessor('data.coordenada', {
+      header: 'Coordenada',
       cell: info => (
         <span className="font-medium text-blue-600">
           {info.getValue()}
@@ -111,7 +119,7 @@ const SondeosTable: React.FC<SondeosTableProps> = ({ data }) => {
 
       {/* Vista Tablet */}
       <div className="hidden md:block lg:hidden overflow-x-auto bg-white rounded-lg shadow">
-        <table className="w-full">
+        <table className="w-full text-gray-800">
           <thead className="bg-gray-50 border-b">
             <tr>
               <th className="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Info</th>
@@ -125,7 +133,8 @@ const SondeosTable: React.FC<SondeosTableProps> = ({ data }) => {
                 <td className="px-3 py-3">
                   <div className="space-y-1">
                     <span className="capitalize font-medium text-sm">{row.original.turn}</span>
-                    <div className="text-sm font-medium text-blue-600">{row.original.data.coordenadaOPila}</div>
+                    <div className="text-sm font-medium text-blue-600">{row.original.data.coordenada}</div>
+                     <div className="text-sm font-medium text-blue-600">{row.original.data.nombrePila}</div>
                   </div>
                 </td>
                 <td className="px-3 py-3">
@@ -157,7 +166,8 @@ const SondeosTable: React.FC<SondeosTableProps> = ({ data }) => {
             <div className="flex justify-between items-start mb-4">
               <div>
                 <span className="capitalize font-semibold text-gray-900">{row.original.turn}</span>
-                <div className="text-lg font-bold text-blue-600 mt-1">{row.original.data.coordenadaOPila}</div>
+                <div className="text-sm font-medium text-blue-600">{row.original.data.coordenada}</div>
+                     <div className="text-sm font-medium text-blue-600">{row.original.data.nombrePila}</div>
               </div>
               <span className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full">
                 Sondeo

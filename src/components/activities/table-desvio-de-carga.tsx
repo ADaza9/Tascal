@@ -9,6 +9,7 @@ import {
   createColumnHelper,
 } from "@tanstack/react-table";
 import { IDesvioCargas } from "@/app/models/activity.type";
+import { json } from "zod";
 
 const columnHelper = createColumnHelper<IDesvioCargas>();
 
@@ -18,7 +19,7 @@ interface DesvioTableProps {
 
 const DesvioCargas = ({ data: initialData }: DesvioTableProps) => {
   const [data, setData] = useState<IDesvioCargas[]>(initialData);
- 
+
   const columns = useMemo(
     () => [
       columnHelper.accessor("turn", {
@@ -57,7 +58,6 @@ const DesvioCargas = ({ data: initialData }: DesvioTableProps) => {
 
   return (
     <div className="w-full space-y-4">
-
       {/* Vista Tablet */}
       <div className="hidden md:block overflow-x-auto bg-white rounded-lg shadow">
         <table className="w-full">
@@ -88,10 +88,16 @@ const DesvioCargas = ({ data: initialData }: DesvioTableProps) => {
                   <div className="space-y-1 text-sm text-gray-600">
                     <div>
                       <span className="font-medium">Inicial:</span>{" "}
+                      {row.original.data.destinoInicial.match("Silos") || row.original.data.destinoInicial.match("Planta de Lavado")
+                        ? null
+                        : "Pilas "}
                       {row.original.data.destinoInicial}
                     </div>
                     <div>
                       <span className="font-medium">Final:</span>{" "}
+                      {row.original.data.destinoFinal.match("Silos") || row.original.data.destinoFinal.match("Planta de Lavado")
+                        ? null
+                        : "Pilas "}
                       {row.original.data.destinoFinal}
                     </div>
                   </div>
@@ -140,8 +146,6 @@ const DesvioCargas = ({ data: initialData }: DesvioTableProps) => {
                 </div>
               </div>
             </div>
-
-        
           </div>
         ))}
       </div>
