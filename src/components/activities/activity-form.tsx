@@ -20,7 +20,7 @@ interface FormState {
   data: FormDataRegister;
 }
 
-const pilas = ["20","9S","9N","8S","8N","14","12","15B","16","21","22","01","06","25","26","27","40","279","280","290","255","250","243","302","303",];
+
 
 const StepperForm = ({
   user,
@@ -75,6 +75,34 @@ const StepperForm = ({
     e.preventDefault();
     form.handleSubmit();
   };
+
+  const pilas = [
+  "20",
+  "9S",
+  "9N",
+  "8S",
+  "8N",
+  "14",
+  "12",
+  "15B",
+  "16",
+  "21",
+  "22",
+  "01",
+  "06",
+  "25",
+  "26",
+  "27",
+  "40",
+  "279",
+  "280",
+  "290",
+  "255",
+  "250",
+  "243",
+  "302",
+  "303",
+];
 
   // Render Step 1: Turno
   const renderStep1 = () => (
@@ -259,10 +287,12 @@ const StepperForm = ({
                 onChange={(e) => field.handleChange(e.target.value as Destino)}
               >
                 <option value="">Selecciona destino inicial</option>
-                {
-                  pilas.map( (pila, index) => <option key={index + pila} value="Pilas">Pilas {pila}</option>)
-                }
-                
+                {pilas.map((pila, index) => (
+                  <option key={index + pila}  value={pila}>
+                    Pilas {pila}
+                  </option>
+                ))}
+
                 <option value="Silos">Silos</option>
                 <option value="Planta de Lavado">Planta de Lavado</option>
               </select>
@@ -283,9 +313,11 @@ const StepperForm = ({
                 onChange={(e) => field.handleChange(e.target.value as Destino)}
               >
                 <option value="">Selecciona destino final</option>
-                  {
-                  pilas.map( (pila, index) => <option key={pila + index} value="Pilas">Pila {pila}</option>)
-                }
+                {pilas.map((pila, index) => (
+                  <option key={pila + index} value={pila}>
+                    Pila {pila}
+                  </option>
+                ))}
                 <option value="Silos">Silos</option>
                 <option value="Planta de Lavado">Planta de Lavado</option>
               </select>
@@ -334,24 +366,23 @@ const StepperForm = ({
               <label className="label">
                 <span className="label-text">Tajo</span>
               </label>
-              
-                <select
-                  className="select select-bordered w-full"
-                  value={field.state.value || ""}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                >
-                  <option value="">Selecciona un tajo</option>
-                  {tajos.map((tajo) => (
-                    <option key={tajo} value={tajo}>
-                      {tajo}
-                    </option>
-                  ))}
-                </select>
-              
+
+              <select
+                className="select select-bordered w-full"
+                value={field.state.value || ""}
+                onChange={(e) => field.handleChange(e.target.value)}
+              >
+                <option value="">Selecciona un tajo</option>
+                {tajos.map((tajo) => (
+                  <option key={tajo} value={tajo}>
+                    {tajo}
+                  </option>
+                ))}
+              </select>
             </div>
           )}
         </form.Field>
-           <form.Field name="data.equipoCargue">
+        <form.Field name="data.equipoCargue">
           {(field) => (
             <div className="form-control">
               <label className="label">
@@ -368,7 +399,7 @@ const StepperForm = ({
           )}
         </form.Field>
 
-           <form.Field name="data.toneladas">
+        <form.Field name="data.toneladas">
           {(field) => (
             <div className="form-control">
               <label className="label">
@@ -431,22 +462,22 @@ const StepperForm = ({
 
       <form.Field name="data.pila">
         {(field) => (
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Pila</span>
-              </label>
-              <select
-                className="select select-bordered w-full"
-                value={field.state.value || ""}
-                onChange={(e) => field.handleChange(e.target.value as Destino)}
-              >
-                <option value="">Selecciona Pila</option>
-                  {
-                  pilas.map( pila => <option value="Pilas"> Pila {pila}</option>)
-                }
-              </select>
-            </div>
-          )}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Pila</span>
+            </label>
+            <select
+              className="select select-bordered w-full"
+              value={field.state.value || ""}
+              onChange={(e) => field.handleChange(e.target.value as Destino)}
+            >
+              <option value="">Selecciona Pila</option>
+              {pilas.map((pila) => (
+                <option value={pila}> Pila {pila}</option>
+              ))}
+            </select>
+          </div>
+        )}
       </form.Field>
 
       <form.Field name="data.hot_point">
@@ -540,15 +571,15 @@ const StepperForm = ({
                 onChange={(e) => field.handleChange(e.target.value as Destino)}
               >
                 <option value="">Selecciona Pila</option>
-                  {
-                  pilas.map( pila => <option value="Pilas"> Pila {pila}</option>)
-                }
+                {pilas.map((pila) => (
+                  <option value={pila}> Pila {pila}</option>
+                ))}
               </select>
             </div>
           )}
         </form.Field>
 
-         {/* Coordenada - solo para sondeo de cargas */}
+        {/* Coordenada - solo para sondeo de cargas */}
         {sondeoType === "sondeo_de_cargas" && (
           <form.Field name="data.coordenada">
             {(field) => (
@@ -606,8 +637,6 @@ const StepperForm = ({
             </div>
           )}
         </form.Field>
-
-       
       </div>
     );
   };
