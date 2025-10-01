@@ -57,6 +57,8 @@ export interface InspeccionMantosData {
 export interface InspeccionPilasData {
   pila: string;
   comentario: string;
+  hot_point?: string;
+  auto_combustion?: string;
 }
 
 export interface SondeoData {

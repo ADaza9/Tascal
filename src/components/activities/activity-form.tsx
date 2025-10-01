@@ -412,6 +412,39 @@ const StepperForm = ({user, isDevelopment}: {user: UserWithRole, isDevelopment: 
         )}
       </form.Field>
 
+      <form.Field name="data.hot_point">
+        {(field) => (
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Puntos calientes</span>
+            </label>
+             <input
+              type="text"
+              placeholder="Puntos calientes"
+              className="input input-bordered w-full"
+              value={field.state.value || ''}
+              onChange={(e) => field.handleChange(e.target.value)}
+            />
+          </div>
+        )}
+      </form.Field>
+      <form.Field name="data.auto_combustion">
+        {(field) => (
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Auto combustible</span>
+            </label>
+             <input
+              type="text"
+              placeholder="Auto combustible"
+              className="input input-bordered w-full"
+              value={field.state.value || ''}
+              onChange={(e) => field.handleChange(e.target.value)}
+            />
+          </div>
+        )}
+      </form.Field>
+
       <form.Field name="data.comentario">
         {(field) => (
           <div className="form-control">
