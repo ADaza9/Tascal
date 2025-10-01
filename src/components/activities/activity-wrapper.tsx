@@ -16,12 +16,11 @@ export const ActivityWrapper = ({ data }: { data: IActivityOperationArray }) => 
     const [groupActivities, badges] = useMemo(() => {
          const groupActivities =  Object.groupBy(data, (activity) => activity.type);
 
-         const badges =  Object.keys(groupActivities)
+         const badges =  Object.keys(groupActivities).toSorted()
          setBadgeSelect(badges[0] || '');
          
          return [ groupActivities, badges]
     }, [data]);
-    console.log(JSON.stringify(data, null, 2));
 
   return <div className="min-h-screen px-4 py-8"> <div>
           {

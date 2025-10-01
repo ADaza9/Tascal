@@ -23,7 +23,32 @@ const InspeccionMantosTable: React.FC<InspeccionMantosTableProps> = ({ data: ini
 
   const updateBtuReal = async (id: string, btuReal: number) => {
     console.log(`Actualizando registro ${id} con btuReal: ${btuReal}`);
-    // TODO: Implementar llamada a API
+     try {
+         const response = await fetch("/api/activity", {
+           method: "PUT",
+           headers: {
+             "Content-Type": "application/json",
+           },
+           body: JSON.stringify({
+             id,
+             data: {
+               ...data.find((item) => item.id === id)?.data,
+               btuReal,
+             },
+           }),
+         });
+   
+         if (!response.ok) {
+           throw new Error("Error al actualizar el registro");
+         }
+   
+         const result = await response.json();
+         console.log("Registro actualizado:", result);
+       } catch (error) {
+         console.error("Error en la solicitud:", error);
+         throw error;
+       }
+   
   };
 
   const formatHora = (timestamp: string) => {
@@ -246,7 +271,7 @@ const InspeccionMantosTable: React.FC<InspeccionMantosTableProps> = ({ data: ini
                     <div className="text-xs ">{formatHora(row.original.updatedAt)}</div>
                   </div>
                 </td>
-                <td className="px-3 py-3">
+                <td className="px-3 py-3 text-gray-900">
                   <div className="space-y-1 text-sm text-gray-800">
                     <div>{row.original.data.coordenada}</div>
                     <div className="text-xs">
@@ -254,7 +279,7 @@ const InspeccionMantosTable: React.FC<InspeccionMantosTableProps> = ({ data: ini
                     </div>
                   </div>
                 </td>
-                <td className="px-3 py-3">
+                <td className="px-3 py-3 text-gray-900">
                   <div className="space-y-1 text-sm">
                     <div>P: {row.original.data.pronosticoBTU.toLocaleString()}</div>
                     {row.original.data.btuReal && (
@@ -275,7 +300,7 @@ const InspeccionMantosTable: React.FC<InspeccionMantosTableProps> = ({ data: ini
                         placeholder="BTU"
                         value={editingBtuReal[row.original.id] || ''}
                         onChange={(e) => handleInputChange(row.original.id, e.target.value)}
-                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                         onKeyDown={(e) => {
                           if (e.key === 'Enter') {
                             handleBtuRealSubmit(row.original);
@@ -374,7 +399,7 @@ const InspeccionMantosTable: React.FC<InspeccionMantosTableProps> = ({ data: ini
                     placeholder="Ingresa BTU Real"
                     value={editingBtuReal[row.original.id] || ''}
                     onChange={(e) => handleInputChange(row.original.id, e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         handleBtuRealSubmit(row.original);

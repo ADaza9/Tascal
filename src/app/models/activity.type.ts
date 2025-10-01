@@ -66,8 +66,8 @@ export interface IInspeccionMantos {
 interface IInspeccionPilasData {
   pila: string;
   comentarios?: string;
-  puntosCalientes: string;
-  autoCombustiones: string;
+  hot_point: string;
+  auto_combustion: string;
 }
 
 export interface IInspeccionPilas {

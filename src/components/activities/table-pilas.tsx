@@ -43,7 +43,7 @@ const InspeccionPilasTable: React.FC<InspeccionPilasTableProps> = ({ data }) => 
         </div>
       ),
     }),
-    columnHelper.accessor('data.puntosCalientes', {
+    columnHelper.accessor('data.hot_point', {
       header: 'Puntos Calientes',
       cell: info => (
         <div className="max-w-xs">
@@ -51,7 +51,7 @@ const InspeccionPilasTable: React.FC<InspeccionPilasTableProps> = ({ data }) => 
         </div>
       ),
     }),
-    columnHelper.accessor('data.autoCombustiones', {
+    columnHelper.accessor('data.auto_combustion', {
       header: 'Auto Combustiones',
       cell: info => (
         <div className="max-w-xs">
@@ -74,7 +74,7 @@ const InspeccionPilasTable: React.FC<InspeccionPilasTableProps> = ({ data }) => 
   });
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-4 text-gray-900">
       {/* Vista Desktop */}
       <div className="hidden lg:block overflow-x-auto bg-white rounded-lg shadow">
         <table className="w-full min-w-full">
@@ -139,11 +139,11 @@ const InspeccionPilasTable: React.FC<InspeccionPilasTableProps> = ({ data }) => 
                   <div className="space-y-1 text-sm">
                     <div>
                       <span className="font-medium text-gray-600">P. Calientes:</span>
-                      <div className="text-gray-900">{row.original.data.puntosCalientes || '-'}</div>
+                      <div className="text-gray-900">{row.original.data.hot_point || '-'}</div>
                     </div>
                     <div>
                       <span className="font-medium text-gray-600">A. Combustiones:</span>
-                      <div className="text-gray-900">{row.original.data.autoCombustiones || '-'}</div>
+                      <div className="text-gray-900">{row.original.data.auto_combustion || '-'}</div>
                     </div>
                   </div>
                 </td>
@@ -178,14 +178,14 @@ const InspeccionPilasTable: React.FC<InspeccionPilasTableProps> = ({ data }) => 
               <div className="border-t pt-3">
                 <span className="font-medium text-gray-600 text-sm">Puntos Calientes:</span>
                 <div className="text-gray-900 mt-1 bg-orange-50 p-2 rounded">
-                  {row.original.data.puntosCalientes || 'No reportados'}
+                  {row.original.data.hot_point || 'No reportados'}
                 </div>
               </div>
 
               <div>
                 <span className="font-medium text-gray-600 text-sm">Auto Combustiones:</span>
                 <div className="text-gray-900 mt-1 bg-red-50 p-2 rounded">
-                  {row.original.data.autoCombustiones || 'No reportadas'}
+                  {row.original.data.auto_combustion || 'No reportadas'}
                 </div>
               </div>
             </div>
