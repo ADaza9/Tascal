@@ -444,11 +444,11 @@ const StepperForm = ({
         {(field) => (
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Auto combustible</span>
+              <span className="label-text">Auto combustion</span>
             </label>
             <input
               type="text"
-              placeholder="Auto combustible"
+              placeholder="Auto combustion"
               className="input input-bordered w-full"
               value={field.state.value || ""}
               onChange={(e) => field.handleChange(e.target.value)}
