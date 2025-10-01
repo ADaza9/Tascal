@@ -1,3 +1,4 @@
+import { IActivityOperation } from "@/app/models/activity.type";
 import ActivityOperationTable from "@/components/activities/activity-list";
 import { ActivityWrapper } from "@/components/activities/activity-wrapper";
 import { HeaderActivity } from "@/components/header/header-activity";
@@ -25,7 +26,7 @@ export default async function registerActivity() {
        <HeaderActivity link="/dashboard" title="Historial de Actividades" />
       <section className="mt-6 mx-4">
 
-       <ActivityWrapper data={activities} />
+       <ActivityWrapper data={activities as unknown as IActivityOperation[]} />
         
       </section>
     </div>
