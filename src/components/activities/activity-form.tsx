@@ -359,6 +359,39 @@ const StepperForm = ({
             </div>
           )}
         </form.Field>
+           <form.Field name="data.equipoCargue">
+          {(field) => (
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Equipo de cargue</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Equipo de cargue"
+                className="input input-bordered w-full"
+                value={field.state.value || ""}
+                onChange={(e) => field.handleChange(e.target.value)}
+              />
+            </div>
+          )}
+        </form.Field>
+
+           <form.Field name="data.toneladas">
+          {(field) => (
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Toneladas</span>
+              </label>
+              <input
+                type="number"
+                placeholder="Toneladas"
+                className="input input-bordered w-full"
+                value={field.state.value || ""}
+                onChange={(e) => field.handleChange(Number(e.target.value))}
+              />
+            </div>
+          )}
+        </form.Field>
 
         {/* Coordenada */}
         <form.Field name="data.coordenada">

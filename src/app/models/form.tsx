@@ -51,6 +51,8 @@ export interface InspeccionMantosData {
   zona: ZonaMantos;
   tajo: TajoNorte | string; // string para Zona Centro
   coordenada: string;
+  equipoCargue: string;
+  toneladas: number;
   pronosticoBTU: number;
 }
 
