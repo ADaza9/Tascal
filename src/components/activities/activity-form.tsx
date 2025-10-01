@@ -523,6 +523,26 @@ const StepperForm = ({
           )}
         </form.Field>
 
+         {/* Coordenada - solo para sondeo de cargas */}
+        {sondeoType === "sondeo_de_cargas" && (
+          <form.Field name="data.coordenada">
+            {(field) => (
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Coordenada</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="F-30-45-160"
+                  className="input input-bordered w-full"
+                  value={field.state.value || ""}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+              </div>
+            )}
+          </form.Field>
+        )}
+
         {/* % de ceniza */}
         <form.Field name="data.porcentajeCeniza">
           {(field) => (
@@ -535,6 +555,8 @@ const StepperForm = ({
                 placeholder="Porcentaje de ceniza"
                 className="input input-bordered w-full"
                 step="0.01"
+                max={100}
+                min={0}
                 value={field.state.value || ""}
                 onChange={(e) => field.handleChange(parseFloat(e.target.value))}
               />
@@ -560,25 +582,7 @@ const StepperForm = ({
           )}
         </form.Field>
 
-        {/* Coordenada - solo para sondeo de cargas */}
-        {sondeoType === "sondeo_de_cargas" && (
-          <form.Field name="data.coordenada">
-            {(field) => (
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Coordenada</span>
-                </label>
-                <input
-                  type="text"
-                  placeholder="F-30-45-160"
-                  className="input input-bordered w-full"
-                  value={field.state.value || ""}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                />
-              </div>
-            )}
-          </form.Field>
-        )}
+       
       </div>
     );
   };
