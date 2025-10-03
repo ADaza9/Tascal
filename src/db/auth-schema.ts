@@ -104,4 +104,14 @@ export const activityOperation = pgTable('activityOperation', {
   createdDay: timestamp('created_day').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow()
 });
+
+export const trucks = pgTable("trucks", {
+  id: uuid('id').primaryKey().defaultRandom(),
+    userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  truckNumber: text("truck_number"),
+  kmInicial: text("km_inicial"),
+  kmFinal: text("km_final")
+})
   

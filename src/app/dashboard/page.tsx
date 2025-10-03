@@ -87,6 +87,20 @@ export default async function DashboardPage() {
               </div>
             </div>
           </RoleGuard>
+
+          <RoleGuard requiredRole="technician" userRole={user.role  as any} exact>
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title text-info">🔧 Ver lista de camionetas</h2>
+                <p>lista de camionetas.</p>
+                <div className="card-actions justify-end">
+                   <Link href={'/dashboard/trucks'}>
+                  <button className="btn btn-info">Ver Listado</button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </RoleGuard>
         </div>
 
         {/* User Info Debug */}
