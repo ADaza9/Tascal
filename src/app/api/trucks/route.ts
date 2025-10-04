@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { trucks } from "@/db/auth-schema";
 import { getCurrentUser } from "@/lib/auth-utils";
 import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
@@ -31,7 +32,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const user = await getCurrentUser(request.headers);
+    const user = await getCurrentUser(await headers());
 
     if (!user) {
       return NextResponse.json(
@@ -81,7 +82,7 @@ export async function PUT(
   { params }: { params: { id: string } }
 ) {
   try {
-    const user = await getCurrentUser(request.headers);
+   const user = await getCurrentUser(await headers());
 
     if (!user) {
       return NextResponse.json(
