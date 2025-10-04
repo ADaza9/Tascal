@@ -28,7 +28,7 @@ export default function TrucksTableClient({ data }: TrucksTableClientProps) {
 
   const handleEdit = (truck: ITruck) => {
     // Redirigir a página de edición
-    router.push(`/trucks/edit/${truck.id}`);
+    //router.push(`/trucks/edit/${truck.id}`);
   };
 
   const handleDelete = async (id: string) => {
