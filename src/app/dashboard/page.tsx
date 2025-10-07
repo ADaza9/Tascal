@@ -37,9 +37,11 @@ export default async function DashboardPage() {
             <div className="card bg-base-100 shadow-xl">
               <div className="card-body">
                 <h2 className="card-title text-warning">👥 Gestión de Equipos</h2>
-                <p>Administra equipos de trabajo y asigna tareas.</p>
+                <p>Administra asigna tareas.</p>
                 <div className="card-actions justify-end">
+                   <Link href={'/dashboard/supervisor'}>
                   <button className="btn btn-warning">Gestionar</button>
+                   </Link>
                 </div>
               </div>
             </div>
