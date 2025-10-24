@@ -47,6 +47,20 @@ export default async function DashboardPage() {
             </div>
           </SupervisorAndAbove>
 
+          <SupervisorAndAbove userRole={user.role as any}>
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title text-accent">👥 Crear usuarios</h2>
+                <p>Administra usuarios.</p>
+                <div className="card-actions justify-end">
+                   <Link href={'/dashboard/supervisor/users'}>
+                  <button className="btn btn-accent">Gestionar</button>
+                   </Link>
+                </div>
+              </div>
+            </div>
+          </SupervisorAndAbove>
+
           {/* Super Admin only */}
           <SuperAdminOnly userRole={user.role as any}>
             <div className="card bg-base-100 shadow-xl">
