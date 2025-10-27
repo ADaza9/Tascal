@@ -41,7 +41,7 @@ const TrucksTable: React.FC<TrucksTableProps> = ({ data: initialData, onEdit, on
 
   const columns = useMemo(() => [
     columnHelper.accessor('truckNumber', {
-      header: 'Número de Camión',
+      header: 'Número de camioneta',
       cell: info => (
         <span className="font-semibold text-primary">
           {info.getValue() || '-'}

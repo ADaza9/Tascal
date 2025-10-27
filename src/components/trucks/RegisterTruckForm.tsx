@@ -80,7 +80,7 @@ const RegisterTruckForm: React.FC<RegisterTruckFormProps> = ({ userId }) => {
       {/* Formulario */}
       <div className="card bg-base-100 shadow-xl max-w-2xl mx-auto">
         <div className="card-body">
-          <h2 className="card-title text-2xl mb-4">Registrar Camión</h2>
+          <h2 className="card-title text-2xl mb-4">Registrar camioneta</h2>
 
           <form
             onSubmit={(e) => {
@@ -89,12 +89,12 @@ const RegisterTruckForm: React.FC<RegisterTruckFormProps> = ({ userId }) => {
               form.handleSubmit();
             }}
           >
-            {/* Número de Camión */}
+            {/* Número de camioneta */}
             <form.Field
               name="truckNumber"
               validators={{
                 onChange: ({ value }) => {
-                  if (!value) return 'El número de camión es obligatorio';
+                  if (!value) return 'El número de camioneta es obligatorio';
                   if (!/^\d+$/.test(value)) return 'Debe ser un número válido';
                   return undefined;
                 },
@@ -103,12 +103,12 @@ const RegisterTruckForm: React.FC<RegisterTruckFormProps> = ({ userId }) => {
                 <div className="form-control w-full mb-4">
                   <label className="label">
                     <span className="label-text font-medium">
-                      Número de Camión <span className="text-error">*</span>
+                      Número de camioneta <span className="text-error">*</span>
                     </span>
                   </label>
                   <input
                     type="text"
-                    placeholder="Ingresa el número de camión"
+                    placeholder="Ingresa el número de camioneta"
                     className={`input input-bordered w-full ${
                       field.state.meta.errors.length > 0 ? 'input-error' : ''
                     }`}

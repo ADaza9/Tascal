@@ -93,7 +93,7 @@ export default async function DashboardPage() {
           <RoleGuard requiredRole="technician" userRole={user.role  as any} exact>
             <div className="card bg-base-100 shadow-xl">
               <div className="card-body">
-                <h2 className="card-title text-info">🔧 Ver listad de Actividades</h2>
+                <h2 className="card-title text-info">🔧 Ver listado de Actividades</h2>
                 <p>lista de actividades de control.</p>
                 <div className="card-actions justify-end">
                    <Link href={'/dashboard/list'}>
