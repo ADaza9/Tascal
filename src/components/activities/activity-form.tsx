@@ -20,8 +20,6 @@ interface FormState {
   data: FormDataRegister;
 }
 
-
-
 const StepperForm = ({
   user,
   isDevelopment,
@@ -77,32 +75,32 @@ const StepperForm = ({
   };
 
   const pilas = [
-  "20",
-  "9S",
-  "9N",
-  "8S",
-  "8N",
-  "14",
-  "12",
-  "15B",
-  "16",
-  "21",
-  "22",
-  "01",
-  "06",
-  "25",
-  "26",
-  "27",
-  "40",
-  "279",
-  "280",
-  "290",
-  "255",
-  "250",
-  "243",
-  "302",
-  "303",
-];
+    "20",
+    "9S",
+    "9N",
+    "8S",
+    "8N",
+    "14",
+    "12",
+    "15B",
+    "16",
+    "21",
+    "22",
+    "01",
+    "06",
+    "25",
+    "26",
+    "27",
+    "40",
+    "279",
+    "280",
+    "290",
+    "255",
+    "250",
+    "243",
+    "302",
+    "303",
+  ];
 
   // Render Step 1: Turno
   const renderStep1 = () => (
@@ -203,10 +201,8 @@ const StepperForm = ({
   const DesvioFields: React.FC = () => {
     const [zona, setZona] = React.useState<Zona>("Zona Norte");
 
-    const tajos =
-      zona === "Zona Norte"
-        ? ["Annex", "La Puente", "Tabaco"]
-        : ["EWP", "Patilla", "Tajo 100", "Oreganal"];
+    const tajosNorte = ["Annex", "La Puente", "Tabaco"];
+    const tajosCentro = ["EWP", "Patilla", "Tajo 100", "Oreganal"];
 
     return (
       <div className="space-y-4">
@@ -227,11 +223,11 @@ const StepperForm = ({
             }}
           >
             <option value="Zona Norte">Zona Norte</option>
-            <option value="Zona Sur">Zona Sur</option>
+            <option value="Zona Centro">Zona Centro</option>
           </select>
         </div>
 
-        {/* Tajo */}
+        {/* Tajo (mostrar tajos para Zona Norte y Zona Sur con grupos) */}
         <form.Field name="data.tajo">
           {(field) => (
             <div className="form-control">
@@ -241,14 +237,24 @@ const StepperForm = ({
               <select
                 className="select select-bordered w-full"
                 value={field.state.value || ""}
-                onChange={(e) => field.handleChange(e.target.value)}
+                onChange={(e) => field.handleChange(e.target.value)} 
               >
                 <option value="">Selecciona un tajo</option>
-                {tajos.map((tajo) => (
-                  <option key={tajo} value={tajo}>
-                    {tajo}
-                  </option>
-                ))}
+
+                {zona === "Zona Norte" ? (
+                  tajosNorte.map((tajo) => (
+                    <option key={`n-${tajo}`} value={tajo}>
+                      {tajo}
+                    </option>
+                  ))
+                ) : (
+                  tajosCentro.map((tajo) => (
+                    <option key={`s-${tajo}`} value={tajo}>
+                      {tajo}
+                    </option>
+                  ))
+                )}
+      
               </select>
             </div>
           )}
@@ -288,7 +294,7 @@ const StepperForm = ({
               >
                 <option value="">Selecciona destino inicial</option>
                 {pilas.map((pila, index) => (
-                  <option key={index + pila}  value={pila}>
+                  <option key={index + pila} value={pila}>
                     Pilas {pila}
                   </option>
                 ))}
@@ -332,7 +338,8 @@ const StepperForm = ({
   const InspeccionMantosFields: React.FC = () => {
     const [zona, setZona] = React.useState<ZonaMantos>("Zona Norte");
 
-    const tajos = zona === "Zona Norte" ? ["Annex", "La Puente", "Tabaco"] : [];
+    const tajosNorte = ["Annex", "La Puente", "Tabaco"];
+    const tajosCentro = ["EWP", "Patilla", "Tajo 100", "Oreganal"];
 
     return (
       <div className="space-y-4">
@@ -373,11 +380,19 @@ const StepperForm = ({
                 onChange={(e) => field.handleChange(e.target.value)}
               >
                 <option value="">Selecciona un tajo</option>
-                {tajos.map((tajo) => (
-                  <option key={tajo} value={tajo}>
-                    {tajo}
-                  </option>
-                ))}
+                {zona === "Zona Norte" ? (
+                  tajosNorte.map((tajo) => (
+                    <option key={`n-${tajo}`} value={tajo}>
+                      {tajo}
+                    </option>
+                  ))
+                ) : (
+                  tajosCentro.map((tajo) => (
+                    <option key={`s-${tajo}`} value={tajo}>
+                      {tajo}
+                    </option>
+                  ))
+                )}
               </select>
             </div>
           )}
@@ -472,8 +487,8 @@ const StepperForm = ({
               onChange={(e) => field.handleChange(e.target.value as Destino)}
             >
               <option value="">Selecciona Pila</option>
-              {pilas.map((pila) => (
-                <option value={pila}> Pila {pila}</option>
+              {pilas.map((pila, index) => (
+                <option key={pila + index} value={pila}> Pila {pila}</option>
               ))}
             </select>
           </div>
